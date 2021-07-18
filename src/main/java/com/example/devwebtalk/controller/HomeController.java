@@ -50,4 +50,9 @@ public class HomeController {
         return "/user/friendList";
     }
 
+    @GetMapping(value = "/chat")
+    public String chatMain() {
+        return "/chat";
+    }
+
 }
