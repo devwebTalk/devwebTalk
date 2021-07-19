@@ -52,7 +52,7 @@ public class HomeController {
 
     @GetMapping(value = "/chat")
     public String chatMain() {
-        return "/chat";
+        return "/chat/chat";
     }
 
 }
