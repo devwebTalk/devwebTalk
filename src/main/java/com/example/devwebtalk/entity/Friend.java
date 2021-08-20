@@ -18,7 +18,7 @@ public class Friend extends BaseEntity{
 	private String friendName;
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "FRIENDS_ID")
+	@JoinColumn(name = "FRIENDSGROUP_ID")
 	private FriendsGroup friendsGroup;
 
 	@ManyToOne(fetch = FetchType.LAZY)

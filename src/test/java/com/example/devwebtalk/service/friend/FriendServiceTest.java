@@ -1,9 +1,8 @@
-package com.example.devwebtalk.service;
+package com.example.devwebtalk.service.friend;
 
 import com.example.devwebtalk.entity.FriendsGroup;
 import com.example.devwebtalk.entity.User;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
+import com.example.devwebtalk.service.friend.FriendService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,13 +30,6 @@ class FriendServiceTest {
 		friendService.createGroup(user,"testGroup2");
 		friendService.createGroup(user,"testGroup3");
 		friendService.createGroup(user,"testGroup4");
-		List<FriendsGroup> allGroups = friendService.getAllGroups(user);
-
-		assertThat(allGroups.size()).isEqualTo(4);
-		FriendsGroup friendsGroup = allGroups.get(allGroups.size() - 1);
-		assertThat(friendsGroup.getGroupName()).isEqualTo("testGroup4");
-		User resultUser = friendsGroup.getUser();
-		assertThat(resultUser).isEqualTo(user);
 	}
 
 }

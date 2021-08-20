@@ -1,10 +1,11 @@
-package com.example.devwebtalk.service;
+package com.example.devwebtalk.service.friend;
 
 import static org.assertj.core.api.Assertions.*;
 
 import com.example.devwebtalk.dto.FriendDto;
 import com.example.devwebtalk.entity.User;
 import com.example.devwebtalk.repository.UserRepository;
+import com.example.devwebtalk.service.friend.FriendDtoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;

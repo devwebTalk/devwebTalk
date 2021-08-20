@@ -31,6 +31,7 @@ public class FriendRepositoryImpl implements FriendRepositoryCustom{
 				.join(friendsGroup.friends, friend)
 				.join(friend.friendUser(), user)
 				.where(friendsGroup.user().eq(me))
+				.orderBy(friendsGroup.id.asc())
 				.fetch();
 	}
 }

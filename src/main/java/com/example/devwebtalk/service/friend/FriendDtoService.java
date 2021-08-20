@@ -1,4 +1,4 @@
-package com.example.devwebtalk.service;
+package com.example.devwebtalk.service.friend;
 
 import com.example.devwebtalk.dto.FriendDto;
 import com.example.devwebtalk.entity.User;

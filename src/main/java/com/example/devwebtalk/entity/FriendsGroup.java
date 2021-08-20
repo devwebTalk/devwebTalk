@@ -3,6 +3,7 @@ package com.example.devwebtalk.entity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,7 +15,7 @@ import java.util.List;
 public class FriendsGroup extends BaseEntity{
 	@Id
 	@GeneratedValue
-	@Column(name = "FRIENDS_ID")
+	@Column(name = "FRIENDSGROUP_ID")
 	private Long id;
 
 	private String groupName;
