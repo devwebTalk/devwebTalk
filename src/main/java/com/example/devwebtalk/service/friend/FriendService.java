@@ -26,8 +26,19 @@ public class FriendService {
 
 	// 친구 목록 생성 .
 	public Long createGroup(User user, String name){
-		friendsGroupRepository.save(new FriendsGroup(name, user));
-		return new FriendsGroup(name, user).getId();
+		FriendsGroup friendsGroup = friendsGroupRepository.save(new FriendsGroup(name, user));
+		return friendsGroup.getId();
+	}
+
+	// 친구 그룹 이름 수정
+	public void updateGroup(Long id, String name) {
+		Optional<FriendsGroup> friendsGroup = friendsGroupRepository.findById(id);
+		friendsGroup.ifPresent(group -> group.changeName(name));
+	}
+
+	// 친구 그룹 삭제
+	public void deleteGroup(Long id) {
+		friendsGroupRepository.deleteById(id);
 	}
 
 	// 친구 추가
@@ -46,6 +57,10 @@ public class FriendService {
 		}
 		return results;
 	}
+
+	// 그룹에 친구 추가
+	//그룹에서 친구 삭제
+	// 친구 그룹 이동
 
 	// 유저의 친구 목록 불러오기
 	public List<FriendDto> getAllFriends(User user) {

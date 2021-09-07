@@ -4,7 +4,7 @@ $(document).ready(function () {
 
 function getFriendList() {
 	var settings = {
-		"url": "http://localhost:8181/user/friend/list",
+		"url": "/friend/list",
 		"method": "GET",
 		"timeout": 0,
 	};

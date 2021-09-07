@@ -32,7 +32,7 @@ class FriendDtoServiceTest {
 		if(userA.isPresent()){
 			allFriendList = friendDtoService.getAllFriendList(userA.get());
 		}
-		assertThat(allFriendList.size()).isEqualTo(2);
+		assertThat(allFriendList.size()).isEqualTo(4);
 		assertThat(allFriendList.get(0).getGroupName()).isEqualTo("");
 		assertThat(allFriendList.get(1).getFriendName()).isEqualTo("userC");
 

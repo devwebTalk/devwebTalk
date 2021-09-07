@@ -30,7 +30,6 @@ public class Friend extends BaseEntity{
 		this.friendsGroup = friendsGroup;
 		this.friendUser = friendUser;
 		this.friendName = friendUser.getName();
-		friendsGroup.getFriends().add(this);
 	}
 
 	public void changeName(String name) {
