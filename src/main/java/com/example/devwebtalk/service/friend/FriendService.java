@@ -1,6 +1,7 @@
 package com.example.devwebtalk.service.friend;
 
 import com.example.devwebtalk.dto.FriendDto;
+import com.example.devwebtalk.entity.Friend;
 import com.example.devwebtalk.entity.FriendsGroup;
 import com.example.devwebtalk.entity.User;
 import com.example.devwebtalk.repository.UserRepository;
@@ -32,6 +33,7 @@ public class FriendService {
 
 	// 친구 그룹 이름 수정
 	public void updateGroup(Long id, String name) {
+		if(!name.equals("")) return;
 		Optional<FriendsGroup> friendsGroup = friendsGroupRepository.findById(id);
 		friendsGroup.ifPresent(group -> group.changeName(name));
 	}
@@ -41,26 +43,37 @@ public class FriendService {
 		friendsGroupRepository.deleteById(id);
 	}
 
-	// 친구 추가
-	public FriendResults addFriend(User user, String email) {
-		FriendResults results = FriendResults.FAIL;
-		Optional<User> friend = userRepository.findByEmail(email);
-
-		// 해당 email 유저가 없음
-		if(friend.isEmpty()) return FriendResults.NOT_FIND_USER;
-
-		// 기본 그룹이 없는 상태에서 친구추가
-		if(friendsGroupRepository.existsByUserAndGroupName(user,"")){
-
-		}else { // 기본그룹이 있는 상태에서 친구추가
-
+	// 그룹에 친구 추가
+	public void addFriendToGroup(Long userId, Long groupId) {
+		Optional<FriendsGroup> groupOptional = friendsGroupRepository.findById(groupId);
+		Optional<User> userOptional = userRepository.findById(userId);
+		if(groupOptional.isPresent() && userOptional.isPresent()) {
+			FriendsGroup friendsGroup = groupOptional.get();
+			User user = userOptional.get();
+			Friend friend = new Friend(friendsGroup, user);
+			friendRepository.save(friend);
 		}
-		return results;
+
 	}
 
-	// 그룹에 친구 추가
 	//그룹에서 친구 삭제
-	// 친구 그룹 이동
+	public void delFriendToGroup(Long friendId) {
+		Optional<Friend> friendOptional = friendRepository.findById(friendId);
+		if(friendOptional.isPresent()) {
+			Friend friend = friendOptional.get();
+			friendRepository.delete(friend);
+		}
+	}
+
+	// 친구 수정
+	public void moveFriendToGroup(Long friendId, Long groupId, String name) {
+		Friend friend = friendRepository.getById(friendId);
+		if(!friend.getFriendName().equals(name)) friend.changeName(name);
+		else {
+			FriendsGroup friendsGroup = friendsGroupRepository.getById(friend.getFriendsGroup().getId());
+
+		}
+	}
 
 	// 유저의 친구 목록 불러오기
 	public List<FriendDto> getAllFriends(User user) {

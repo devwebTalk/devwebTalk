@@ -35,4 +35,6 @@ public class FriendsGroup extends BaseEntity{
 	public void changeName(String groupName) {
 		this.groupName = groupName;
 	}
+
+
 }

@@ -5,6 +5,7 @@ import com.example.devwebtalk.dto.UserModifyDto;
 import com.example.devwebtalk.entity.User;
 import com.example.devwebtalk.repository.UserLoginRememberRepository;
 import com.example.devwebtalk.repository.UserRepository;
+import com.example.devwebtalk.service.friend.FriendService;
 import com.example.devwebtalk.setting.constant.Cons;
 import com.example.devwebtalk.setting.util.CookieUtil;
 import com.example.devwebtalk.setting.util.SEEDUtil;
@@ -30,6 +31,9 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    FriendService friendService;
+
     /**
      * 회원가입
      * @param user
@@ -37,6 +41,8 @@ public class UserService {
      */
     public Long join(User user) {
         User u = userRepository.save(user);
+        // 기본 친구목록 추가
+        friendService.createGroup(user, "");
         return u.getId();
     }
 

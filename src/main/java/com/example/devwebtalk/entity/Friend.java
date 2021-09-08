@@ -35,4 +35,5 @@ public class Friend extends BaseEntity{
 	public void changeName(String name) {
 		this.friendName = name;
 	}
+	public void changeGroup(FriendsGroup friendsGroup) {this.friendsGroup = friendsGroup;}
 }
