@@ -45,13 +45,19 @@ public class InitDummyService {
 
 		FriendsGroup friendsGroupA = new FriendsGroup("", userA);
 		FriendsGroup friendsGroupB = new FriendsGroup("B", userB);
+		FriendsGroup friendsGroupA2 = new FriendsGroup("GroupName", userA);
 		friendsGroupRepository.save(friendsGroupA);
 		friendsGroupRepository.save(friendsGroupB);
+		friendsGroupRepository.save(friendsGroupA2);
 
 		Friend friendB = new Friend(friendsGroupA, userB);
 		Friend friendC = new Friend(friendsGroupA, userC);
+		Friend friendB2 = new Friend(friendsGroupA2, userB);
+		Friend friendC2 = new Friend(friendsGroupA2, userC);
 		friendRepository.save(friendB);
 		friendRepository.save(friendC);
+		friendRepository.save(friendB2);
+		friendRepository.save(friendC2);
 
 		Friend friendBC = new Friend(friendsGroupB, userC);
 		friendRepository.save(friendBC);
