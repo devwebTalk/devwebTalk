@@ -90,7 +90,7 @@ public class SessionUtil {
     }
 
     public static void setSessionValue(HttpServletRequest req, String key, Object value) {
-        final HttpSession session = req.getSession(false);
+        final HttpSession session = req.getSession();
         if( session == null ) return;
         session.setAttribute(key, value);
     }

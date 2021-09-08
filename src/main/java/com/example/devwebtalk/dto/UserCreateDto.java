@@ -1,6 +1,7 @@
 package com.example.devwebtalk.dto;
 
 import com.example.devwebtalk.entity.User;
+import com.example.devwebtalk.setting.annotation.UniqueEmail;
 import lombok.*;
 import org.hibernate.validator.constraints.ScriptAssert;
 
@@ -31,6 +32,7 @@ public class UserCreateDto {
 
 	@NotBlank
 	@Email(message = "이메일 형식을 지켜주세요.")
+	@UniqueEmail
 	private String email;
 
 	@NotBlank

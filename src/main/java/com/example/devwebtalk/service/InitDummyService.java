@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
@@ -32,11 +33,11 @@ public class InitDummyService {
 	@PostConstruct
 	@Transactional
 	public void init() {
-		User userA = new User("userA","a@devweb.com", LocalDateTime.now());
+		User userA = new User("userA","a@devweb.com", LocalDate.now());
 		userA.setPw("123qwe!");
-		User userB = new User("userB","b@devweb.com", LocalDateTime.now());
+		User userB = new User("userB","b@devweb.com", LocalDate.now());
 		userB.setPw("123qwe!");
-		User userC = new User("userC","c@devweb.com", LocalDateTime.now());
+		User userC = new User("userC","c@devweb.com", LocalDate.now());
 		userC.setPw("123qwe!");
 		userRepository.save(userA);
 		userRepository.save(userB);

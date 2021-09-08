@@ -1,19 +1,20 @@
 package com.example.devwebtalk.entity;
 
+import com.example.devwebtalk.dto.UserModifyDto;
 import com.example.devwebtalk.entity.type.SocialType;
 import com.example.devwebtalk.setting.converter.CryptoConverter;
 import lombok.*;
 
 import javax.persistence.*;
-
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static javax.persistence.EnumType.*;
-import static javax.persistence.GenerationType.*;
+import static javax.persistence.EnumType.STRING;
+import static javax.persistence.GenerationType.TABLE;
 
 /**
  * Created by Kim Young Long.
@@ -44,7 +45,7 @@ public class User extends BaseEntity {
 
     private String name;
 
-    private LocalDateTime birthday;
+    private LocalDate birthday;
     @Convert(converter = CryptoConverter.class)
     private String pw;
 
@@ -69,12 +70,12 @@ public class User extends BaseEntity {
         this.name = name;
     }
 
-    public User(String name, LocalDateTime birthday) {
+    public User(String name, LocalDate birthday) {
         this(name, null, birthday);
     }
 
-    public User(String name, String email, LocalDateTime localDateTime) {
-        this(name, null, email, localDateTime);
+    public User(String name, String email, LocalDate birthday) {
+        this(name, null, email, birthday);
     }
 
     public User(String email, String pw) {
@@ -82,14 +83,14 @@ public class User extends BaseEntity {
         this.pw = pw;
     }
 
-    public User(String name, String phone, String email, LocalDateTime localDateTime) {
+    public User(String name, String phone, String email, LocalDate birthday) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.birthday = birthday;
     }
 
-    public User(String name, String phone, String email, LocalDateTime birthday, String pw) {
+    public User(String name, String phone, String email, LocalDate birthday, String pw) {
         this.phone = phone;
         this.email = email;
         this.name = name;
@@ -97,4 +98,10 @@ public class User extends BaseEntity {
         this.pw = pw;
     }
 
+    /** 비즈니스 메서드 */
+    public void updateField(UserModifyDto user) {
+        this.name = user.getName();
+        this.birthday = user.getBirthday();
+        this.phone = user.getPhone();
+    }
 }

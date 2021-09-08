@@ -29,5 +29,7 @@ public class UserLoginDto {
         this.email = user.getEmail();
         this.pw = user.getPw();
     }
-
+    public UserLoginDto(String email) {
+        this.email = email;
+    }
 }

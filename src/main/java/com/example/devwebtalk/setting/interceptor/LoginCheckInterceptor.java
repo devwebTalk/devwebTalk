@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 public class LoginCheckInterceptor implements HandlerInterceptor {
    @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
         final String requestURI = request.getRequestURI();
         log.info("Login Check Interceptor preHandle [URI] {}",requestURI);
         if (SessionUtil.isGuestUser(request)) {

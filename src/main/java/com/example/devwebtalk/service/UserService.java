@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
 import javax.servlet.http.Cookie;
+import javax.validation.constraints.Email;
 import java.util.Optional;
 
 /**
@@ -77,5 +78,15 @@ public class UserService {
 
     public UserModifyDto findUserModifyDtoByEmail(String email) {
         return userRepository.findUserModifyDtoByEmail(email);
+    }
+
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    public void updateUserByModifyDto(String email, UserModifyDto user) {
+        Optional<User> findUser = findByEmail(email);
+        findUser.orElseGet(User::new)
+                .updateField(user);
     }
 }
