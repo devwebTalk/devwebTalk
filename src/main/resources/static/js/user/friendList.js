@@ -16,22 +16,18 @@ function getFriendList() {
 
 function parsingList(list) {
 	var saveId = -1;
-	var html = "";
-	var lineStrBegin = "<div class=\"d-flex text-muted pt-3 pointer\"><svg class=\"bd-placeholder-img flex-shrink-0 me-2 rounded\" width=\"32\" height=\"32\" xmlns=\"http://www.w3.org/2000/svg\" role=\"img\" aria-label=\"Placeholder: 32x32\" preserveAspectRatio=\"xMidYMid slice\" focusable=\"false\"><title>Placeholder</title><rect width=\"100%\" height=\"100%\" fill=\"#007bff\"/><text x=\"50%\" y=\"50%\" fill=\"#007bff\" dy=\".3em\">32x32</text></svg>\n" +
-		"<p class=\"mb-0 border-bottom\"><strong class=\"d-block text-gray-dark\">";
-	var lineStrEnd = "</strong></p></div>";
 	var groupCount = [];
 	var groupCountIndex = -1;
 	for (var ob of list) {
 		var groupName = !!ob.groupName ? ob.groupName : "친구";
 		if(ob.groupId === saveId) {
-			html += lineStrBegin + ob.friendName+ lineStrEnd;
+			appendNodeFriendList(ob.friendName);
 			groupCount[groupCountIndex] += 1;
 		} else {
 			groupCountIndex++;
 			groupCount[groupCountIndex] = 1;
-			html += "<h6 class=\"border-bottom pb-2 mb-0 mt-3\">" + groupName + " <span id='groupCount" + groupCountIndex + "'></span></h6>";
-			html += lineStrBegin + ob.friendName+ lineStrEnd;
+			appendHeadingFriendList(groupName,groupCountIndex);
+			appendNodeFriendList(ob.friendName);
 			saveId = ob.groupId;
 		}
 	}
@@ -43,6 +39,53 @@ function parsingList(list) {
 		count.innerText = groupCount[i] + ' 명';
 	}
 }
+
+function appendHeadingFriendList(groupName, index) {
+	var heading = document.createElement("h6");
+	heading.classList.add("border-bottom");
+	heading.classList.add("pb-2");
+	heading.classList.add("mb-0");
+	heading.classList.add("mt-3");
+	heading.innerText = groupName;
+	var span = document.createElement("span");
+	span.id = groupName + index;
+	document.getElementById("friendList").appendChild(heading);
+	heading.appendChild(span);
+}
+
+function appendNodeFriendList(friendName) {
+	var head = document.createElement("div");
+	head.classList.add("d-flex");
+	head.classList.add("text-muted");
+	head.classList.add("pt-3");
+	head.classList.add("pointer");
+	var svg = document.createElement("svg");
+	svg.classList.add("bd-placeholder-img");
+	svg.classList.add("flex-shrink-0");
+	svg.classList.add("me-2");
+	svg.classList.add("rounded");
+	svg.clientWidth = 32;
+	svg.clientHeight = 32;
+	svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+	svg.setAttribute("role", "img");
+	svg.setAttribute("aria-label", "32x32");
+	svg.setAttribute("preserveAspectRatio", "MidYMid slice");
+	svg.setAttribute("focusable", "false");
+	var paragraph = document.createElement("p");
+	paragraph.classList.add("mb-0");
+	paragraph.classList.add("border-bottom");
+	var strong = document.createElement("strong");
+	strong.classList.add("d-block");
+	strong.classList.add("text-gray-dark");
+	strong.innerText = friendName;
+
+	document.getElementById("friendList").appendChild(head);
+	head.appendChild(svg);
+	head.appendChild(paragraph);
+	paragraph.appendChild(strong);
+}
+
+
 
 function listRefresh(html) {
 	var friendList = document.getElementById('friendList');
