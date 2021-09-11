@@ -58,7 +58,7 @@ public class UserController {
     public String loginView(Model model
             , HttpServletRequest req
             , @RequestParam(defaultValue = "") String email
-            , @RequestParam(defaultValue = "redirect:friendList") String redirectURL
+            , @RequestParam(defaultValue = "redirect:friend") String redirectURL
             , @CookieValue(value = LOGIN_COOKIE, required = false) Cookie loginCookie) {
         if (userLoginRememberService.isValidLoginCookie(loginCookie)) {
             UserLoginDto userLoginDto = userLoginRememberService.findLoginDtoByCookieValue(loginCookie.getValue());
@@ -78,7 +78,7 @@ public class UserController {
     @PostMapping(value = "/login")
     public String login(@Validated @ModelAttribute("user") UserLoginDto userLoginDto
             , BindingResult bindingResult
-            , @RequestParam(defaultValue = "friendList") String redirectURL
+            , @RequestParam(defaultValue = "friend") String redirectURL
             , HttpServletRequest req
             , HttpServletResponse res) {
 

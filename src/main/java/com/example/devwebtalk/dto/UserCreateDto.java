@@ -32,7 +32,7 @@ public class UserCreateDto {
 
 	@NotBlank
 	@Email(message = "이메일 형식을 지켜주세요.")
-	@UniqueEmail
+	//@UniqueEmail
 	private String email;
 
 	@NotBlank

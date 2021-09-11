@@ -23,7 +23,7 @@ import java.util.Map;
 @EqualsAndHashCode
 public class UserModifyDto {
     @NotBlank
-    @UniqueEmail
+    //@UniqueEmail
     @Email(message = "이메일 형식을 지켜주세요.")
     private String email;
     @Pattern(regexp = "/^\\d{3}-\\d{3,4}-\\d{4}$/", message = "전화번호 형식을 정확히 입력해 주세요")
