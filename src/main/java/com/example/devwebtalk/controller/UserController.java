@@ -41,7 +41,7 @@ import static com.example.devwebtalk.setting.constant.Cons.*;
 @RequiredArgsConstructor
 @Controller
 public class UserController {
-    private String redirectMain = "redirect:friendList";
+    private String redirectMain = "redirect:friend";
     private final UserService userService;
     private final UserLoginRememberService userLoginRememberService;
 
