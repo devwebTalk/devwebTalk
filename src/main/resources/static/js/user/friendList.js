@@ -10,6 +10,7 @@ function getFriendList() {
 	};
 
 	$.ajax(settings).done(function (response) {
+		listClear("friendList");
 		parsingList(response);
 	});
 }
@@ -32,7 +33,6 @@ function parsingList(list) {
 		}
 	}
 
-	listRefresh(html);
 	let length = groupCount.length;
 	for (var i = 0; i < length; i++) {
 		var count = document.getElementById("groupCount" + i);
@@ -46,9 +46,11 @@ function appendHeadingFriendList(groupName, index) {
 	heading.classList.add("pb-2");
 	heading.classList.add("mb-0");
 	heading.classList.add("mt-3");
-	heading.innerText = groupName;
+	heading.classList.add("text-dark");
+	heading.innerText = groupName + " ";
 	var span = document.createElement("span");
-	span.id = groupName + index;
+	span.classList.add("text-secondary");
+	span.id = "groupCount" + index;
 	document.getElementById("friendList").appendChild(heading);
 	heading.appendChild(span);
 }
@@ -73,22 +75,42 @@ function appendNodeFriendList(friendName) {
 	svg.setAttribute("focusable", "false");
 	var paragraph = document.createElement("p");
 	paragraph.classList.add("mb-0");
+	paragraph.classList.add("flex-grow-1");
 	paragraph.classList.add("border-bottom");
+	paragraph.classList.add("d-flex");
+	paragraph.classList.add("align-items-center");
+	paragraph.classList.add("list-friend");
 	var strong = document.createElement("strong");
 	strong.classList.add("d-block");
+	strong.classList.add("ms-2");
 	strong.classList.add("text-gray-dark");
 	strong.innerText = friendName;
+	var btnMove	= document.createElement("button");
+	var btnMod 	= document.createElement("button");
+	var btnDel 	= document.createElement("button");
+	btnMove.classList.add("btn");
+	btnMove.classList.add("m-1");
+	btnMove.classList.add("btn-outline-primary");
+	btnMod.classList.add("btn");
+	btnMod.classList.add("m-1");
+	btnMod.classList.add("btn-outline-secondary");
+	btnDel.classList.add("btn");
+	btnDel.classList.add("m-1");
+	btnDel.classList.add("btn-outline-danger");
+	btnMove.innerText = "이동";
+	btnMod.innerText = "수정";
+	btnDel.innerText = "삭제";
 
 	document.getElementById("friendList").appendChild(head);
 	head.appendChild(svg);
 	head.appendChild(paragraph);
+	head.appendChild(btnMove);
+	head.appendChild(btnMod);
+	head.appendChild(btnDel);
 	paragraph.appendChild(strong);
 }
 
-
-
-function listRefresh(html) {
-	var friendList = document.getElementById('friendList');
-	while(friendList.hasChildNodes()) friendList.removeChild(friendList.firstChild);
-	friendList.innerHTML = html;
+function listClear(nodeId) {
+	var node = document.getElementById(nodeId);
+	while(node.hasChildNodes()) node.removeChild(node.firstChild);
 }
