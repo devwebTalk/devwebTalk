@@ -12,6 +12,7 @@ function getFriendList() {
 	$.ajax(settings).done(function (response) {
 		listClear("friendList");
 		parsingList(response);
+		setModalEvent();
 	});
 }
 
@@ -88,6 +89,9 @@ function appendNodeFriendList(friendName) {
 	var btnMove	= document.createElement("button");
 	var btnMod 	= document.createElement("button");
 	var btnDel 	= document.createElement("button");
+	btnMove.id = "btnMove";
+	btnMod.id = "btnMod";
+	btnDel.id = "btnDel";
 	btnMove.classList.add("btn");
 	btnMove.classList.add("m-1");
 	btnMove.classList.add("btn-outline-primary");
@@ -113,4 +117,10 @@ function appendNodeFriendList(friendName) {
 function listClear(nodeId) {
 	var node = document.getElementById(nodeId);
 	while(node.hasChildNodes()) node.removeChild(node.firstChild);
+}
+
+// modal event	///////////
+var listModal;
+function setModalEvent() {
+	listModal = new bootstrap.Modal(document.getElementById('listModal'));
 }
