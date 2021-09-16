@@ -6,13 +6,17 @@ function getFriendList() {
 	var settings = {
 		"url": "/friend/list",
 		"method": "GET",
-		"timeout": 0,
+		"timeout": 0
 	};
 
-	$.ajax(settings).done(function (response) {
+	$.ajax(settings).done(function (list) {
 		listClear("friendList");
-		parsingList(response);
+		parsingList(list);
 		setModalEvent();
+		$(".moveGroup").click(function() {
+			getFriendGroupList($(this).data().id);
+			listModal.show();
+		});
 	});
 }
 
@@ -23,13 +27,13 @@ function parsingList(list) {
 	for (var ob of list) {
 		var groupName = !!ob.groupName ? ob.groupName : "친구";
 		if(ob.groupId === saveId) {
-			appendNodeFriendList(ob.friendName);
+			appendNodeFriendList(ob.friendName, ob.friendId);
 			groupCount[groupCountIndex] += 1;
 		} else {
 			groupCountIndex++;
 			groupCount[groupCountIndex] = 1;
 			appendHeadingFriendList(groupName,groupCountIndex);
-			appendNodeFriendList(ob.friendName);
+			appendNodeFriendList(ob.friendName, ob.friendId);
 			saveId = ob.groupId;
 		}
 	}
@@ -56,7 +60,7 @@ function appendHeadingFriendList(groupName, index) {
 	heading.appendChild(span);
 }
 
-function appendNodeFriendList(friendName) {
+function appendNodeFriendList(friendName, friendId) {
 	var head = document.createElement("div");
 	head.classList.add("d-flex");
 	head.classList.add("text-muted");
@@ -89,12 +93,16 @@ function appendNodeFriendList(friendName) {
 	var btnMove	= document.createElement("button");
 	var btnMod 	= document.createElement("button");
 	var btnDel 	= document.createElement("button");
-	btnMove.id = "btnMove";
-	btnMod.id = "btnMod";
-	btnDel.id = "btnDel";
+	btnMove.dataset.id = friendId;
+	btnMod.dataset.id = friendId;
+	btnDel.dataset.id = friendId;
+	btnMove.dataset.action = "move";
+	btnMod.dataset.action = "mod";
+	btnDel.dataset.action = "del";
 	btnMove.classList.add("btn");
 	btnMove.classList.add("m-1");
 	btnMove.classList.add("btn-outline-primary");
+	btnMove.classList.add("moveGroup");
 	btnMod.classList.add("btn");
 	btnMod.classList.add("m-1");
 	btnMod.classList.add("btn-outline-secondary");
@@ -119,6 +127,41 @@ function listClear(nodeId) {
 	while(node.hasChildNodes()) node.removeChild(node.firstChild);
 }
 
+function getFriendGroupList(friendId) {
+	var settings = {
+		"url": "/friend/group",
+		"method": "GET",
+		"timeout": 0
+	};
+
+	$.ajax(settings).done(function (list) {
+		parsingGroupList(list, friendId);
+	});
+}
+
+function parsingGroupList(list, friendId) {
+	listClear("friendGroupList");
+	var groupList = document.getElementById("friendGroupList");
+	var odd = true;
+	for (var group of list) {
+		var item = document.createElement("div");
+		item.classList.add("list-group-item");
+		item.classList.add("list-group-item-action");
+		item.classList.add("pointer");
+		if(odd) item.classList.add("list-group-item-primary");
+		else item.classList.add("list-group-item-secondary");
+		item.dataset.groupId = group.groupId;
+		item.dataset.friendId = friendId;
+		item.innerText = !group.groupName ? "그룹없음" : group.groupName;
+		groupList.appendChild(item);
+		odd = !odd;
+	}
+}
+
+function moveFriend(node) {
+	var friendId = node.dataset.friendId;
+	var groupId = node.dataset.groupId;
+}
 // modal event	///////////
 var listModal;
 function setModalEvent() {

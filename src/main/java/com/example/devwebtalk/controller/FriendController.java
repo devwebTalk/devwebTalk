@@ -1,6 +1,7 @@
 package com.example.devwebtalk.controller;
 
 import com.example.devwebtalk.dto.FriendDto;
+import com.example.devwebtalk.dto.FriendGroupDto;
 import com.example.devwebtalk.entity.User;
 import com.example.devwebtalk.service.UserService;
 import com.example.devwebtalk.service.friend.FriendDtoService;
@@ -33,8 +34,7 @@ public class FriendController {
 	@ResponseBody
 	public List<FriendDto> getFriendList() {
 		Optional<User> userA = userService.findById(1L);
-		List<FriendDto> allFriends = friendDtoService.getAllFriendList(userA.orElse(null));
-		return allFriends;
+		return friendDtoService.getAllFriendList(userA.orElse(null));
 	}
 
 	@PostMapping(value = "/friend/group")
@@ -63,5 +63,12 @@ public class FriendController {
 		}
 
 		return result;
+	}
+
+	@GetMapping(value = "/friend/group")
+	@ResponseBody
+	public List<FriendGroupDto> getFriendGroup() {
+		Optional<User> userA = userService.findById(1L);
+		return userA.map(friendDtoService::getAllFriendGroupList).orElse(null);
 	}
 }
