@@ -130,7 +130,7 @@
             <div class="pb-3 mb-0 small lh-sm border-bottom w-100">
                 <div class="d-flex justify-content-between">
                     <strong class="text-gray-dark">심기방기</strong>
-                    <a href="#">1:1대화하기</a>
+                    <a th:href="@{/room/{friendEmail}(friendEmail=${friend.getEmail()})}">1:1대화하기</a>
                 </div>
                 <span class="d-block">@심기방기</span>
             </div>

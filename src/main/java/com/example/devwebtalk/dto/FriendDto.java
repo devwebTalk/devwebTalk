@@ -10,4 +10,5 @@ public class FriendDto {
 	private Long friendId;
 	private String friendName;
 	private String groupName;
+	private String email;
 }
