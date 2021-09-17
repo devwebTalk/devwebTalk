@@ -3,7 +3,6 @@ package com.example.devwebtalk.controller;
 import com.example.devwebtalk.dto.UserCreateDto;
 import com.example.devwebtalk.dto.UserLoginDto;
 import com.example.devwebtalk.dto.UserModifyDto;
-import com.example.devwebtalk.entity.User;
 import com.example.devwebtalk.entity.type.SocialType;
 import com.example.devwebtalk.service.UserLoginRememberService;
 import com.example.devwebtalk.service.UserService;
@@ -41,7 +40,7 @@ import static com.example.devwebtalk.setting.constant.Cons.*;
 @RequiredArgsConstructor
 @Controller
 public class UserController {
-    private String redirectMain = "redirect:friend";
+    private final String redirectMain = "redirect:friendList";
     private final UserService userService;
     private final UserLoginRememberService userLoginRememberService;
 
@@ -57,11 +56,10 @@ public class UserController {
     @GetMapping(value = "/login")
     public String loginView(Model model
             , HttpServletRequest req
-            , @RequestParam(defaultValue = "") String email
-            , @RequestParam(defaultValue = "redirect:friend") String redirectURL
-            , @CookieValue(value = LOGIN_COOKIE, required = false) Cookie loginCookie) {
+            , @RequestParam(defaultValue = redirectMain) String redirectURL
+            , @CookieValue(value= LOGIN_COOKIE, required=false) Cookie loginCookie) {
         if (userLoginRememberService.isValidLoginCookie(loginCookie)) {
-            UserLoginDto userLoginDto = userLoginRememberService.findLoginDtoByCookieValue(loginCookie.getValue());
+                UserLoginDto userLoginDto = userLoginRememberService.findLoginDtoByCookieValue(loginCookie.getValue());
             if (userLoginDto != null) {
                 setLoginVOInSession(req, userLoginDto);
                 return redirectURL;
@@ -78,7 +76,7 @@ public class UserController {
     @PostMapping(value = "/login")
     public String login(@Validated @ModelAttribute("user") UserLoginDto userLoginDto
             , BindingResult bindingResult
-            , @RequestParam(defaultValue = "friend") String redirectURL
+            , @RequestParam(defaultValue = redirectMain) String redirectURL
             , HttpServletRequest req
             , HttpServletResponse res) {
 
@@ -93,14 +91,14 @@ public class UserController {
         if (userLoginDto.isRememberLogin()) {
             saveRememberLogin(res, userLoginDto);
         }
-        return "redirect:" + redirectURL;
+        return redirectURL;
     }
 
 
     private void saveRememberLogin(HttpServletResponse res, UserLoginDto userLoginDto) {
         userLoginRememberService.save(userLoginDto);
         final String encryptValue = SEEDUtil.encrypt(userLoginDto.getEmail());
-        CookieUtil.saveCookie(res, new Cookie(LOGIN_COOKIE, encryptValue));
+        CookieUtil.saveCookie(res,new Cookie(LOGIN_COOKIE,encryptValue));
     }
 
     @GetMapping(value = "/join")
@@ -121,7 +119,8 @@ public class UserController {
         }
 
         Long userId = userService.join(user.convertUser());
-        redirectAttributes.addFlashAttribute("email", user.getEmail());
+        session.setAttribute(LOGIN_VO,userService.findById(userId));
+        redirectAttributes.addAttribute("userId", userId);
         return "redirect:login";
     }
 
@@ -132,28 +131,6 @@ public class UserController {
         return "user/info";
     }
 
-    @GetMapping(value = "/edit")
-    public String userEditView(@Login LoginVO loginVO, Model model) {
-        UserModifyDto user = userService.findUserModifyDtoByEmail(loginVO.getEmail());
-        model.addAttribute("user", user);
-        return "user/edit";
-    }
-
-    @PostMapping(value = "/edit")
-    public String edit(@Validated @ModelAttribute("user") UserModifyDto user
-            , BindingResult bindingResult
-            , @Login LoginVO loginVO
-            , RedirectAttributes redirectAttributes
-            , HttpSession session) {
-        if (bindingResult.hasErrors()) {
-            log.info("[user edit error] {}", bindingResult);
-            return "user/edit";
-        }
-        userService.updateUserByModifyDto(loginVO.getEmail(), user);
-
-        return "redirect:info";
-    }
-
     @GetMapping(value = "/logout")
     public String logout(@Login LoginVO loginVO, HttpSession session, HttpServletResponse res) {
         userLoginRememberService.remove(loginVO);
@@ -161,5 +138,4 @@ public class UserController {
         session.removeAttribute(LOGIN_VO);
         return "redirect:login";
     }
-
 }
