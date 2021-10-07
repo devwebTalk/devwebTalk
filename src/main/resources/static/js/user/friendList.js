@@ -17,6 +17,9 @@ function getFriendList() {
 			getFriendGroupList($(this).data().id);
 			listModal.show();
 		});
+		$(".modGroup").click(function() {
+			modModal.show();
+		});
 	});
 }
 
@@ -106,6 +109,7 @@ function appendNodeFriendList(friendName, friendId) {
 	btnMod.classList.add("btn");
 	btnMod.classList.add("m-1");
 	btnMod.classList.add("btn-outline-secondary");
+	btnMod.classList.add("modGroup");
 	btnDel.classList.add("btn");
 	btnDel.classList.add("m-1");
 	btnDel.classList.add("btn-outline-danger");
@@ -164,6 +168,8 @@ function moveFriend(node) {
 }
 // modal event	///////////
 var listModal;
+var modModal;
 function setModalEvent() {
 	listModal = new bootstrap.Modal(document.getElementById('listModal'));
+	modModal = new bootstrap.Modal(document.getElementById('modModal'));
 }
