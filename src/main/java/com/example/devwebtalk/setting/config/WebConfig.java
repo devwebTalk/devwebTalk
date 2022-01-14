@@ -25,7 +25,7 @@ public class WebConfig implements WebMvcConfigurer {
     private static final List<String> DEFAULT_EXCLUDE_PATTERN
             = Arrays.asList("/error/**","/bootstrap/**","/**/*.ico","/**/*.js","/**/*.css","/css/**","/image/**","/js/**","/**/*ajax");
     private static final List<String> LOGIN_EXCLUDE_REQUEST
-            = Arrays.asList("/","/index.html","/user/join","/user/login","/**/main","/user/logout");
+            = Arrays.asList("/","/index.html","/user/join","/user/login","/**/main","/user/logout","/file/**");
     private final LoginArgumentResolver loginArgumentResolver;
     @Override
     public void addInterceptors(InterceptorRegistry registry) {

@@ -4,6 +4,8 @@ import com.example.devwebtalk.dto.ChatDto;
 import com.example.devwebtalk.dto.ChatMessageDto;
 import com.example.devwebtalk.entity.User;
 import com.example.devwebtalk.service.UserService;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -21,15 +23,11 @@ import java.util.Optional;
  * GitHub : https://github.com/kha0213
  */
 @Slf4j
+@RequiredArgsConstructor
 @RestController
 public class ChatController {
 
     private final UserService userService;
-
-    @Autowired
-    public ChatController(UserService userService) {
-        this.userService = userService;
-    }
 
     /**
      * 클라이언트가 ../chat 요청 시 sendMessage() 호출 이후 리턴된 객체정보 담아 @SendTo 로 보냄

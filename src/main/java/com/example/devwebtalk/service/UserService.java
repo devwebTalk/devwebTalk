@@ -8,6 +8,7 @@ import com.example.devwebtalk.repository.UserRepository;
 import com.example.devwebtalk.setting.constant.Cons;
 import com.example.devwebtalk.setting.util.CookieUtil;
 import com.example.devwebtalk.setting.util.SEEDUtil;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
@@ -22,14 +23,15 @@ import java.util.Optional;
  * Date: 2021-07-10
  * Time: 오후 3:31
  */
+@RequiredArgsConstructor
 @Service
 public class UserService {
     public static final String SUCCESS = "success";
     public static final String NONUSER = "nonUser";
     public static final String WRONG_PASSWORD = "wrongPassword";
 
-    @Autowired
-    UserRepository userRepository;
+
+    private final UserRepository userRepository;
 
     /**
      * 회원가입

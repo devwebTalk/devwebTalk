@@ -1,4 +1,4 @@
-package com.example.devwebtalk.vo;
+package com.example.devwebtalk.file;
 
 import lombok.Data;
 
